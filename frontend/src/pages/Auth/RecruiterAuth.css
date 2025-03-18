@@ -5,15 +5,23 @@
   padding: 0;
 }
 
-body {
+.auth-cantainer {
   background: #f6f5f7;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  position: relative;
 }
-
+.Home-Logo{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
 .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   width: 768px;
   max-width: 100%;
@@ -112,6 +120,7 @@ body {
   text-transform: uppercase;
   transition: transform 80ms ease-in;
   margin-top: 10px;
+  cursor: pointer;
 }
 
 .button:active {
@@ -187,6 +196,7 @@ body {
   text-transform: uppercase;
   transition: transform 80ms ease-in;
   margin-top: 20px;
+  cursor: pointer;
 }
 
 .ghost-button:active {
@@ -367,7 +377,25 @@ body {
   justify-content: flex-end;
   margin-bottom: 15px;
 }
+.im-not a{
+  all: unset;
+  
+}
+.im-not {
+  font-size: 14px;
+  font-weight: 400;
+  margin-top: 10px;
+  color: #ffffff;
+border-bottom:#fff dashed 1px ;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.im-not:hover {
+  scale: 0.98;
+  border-bottom: rgb(226, 195, 255) dashed 1px ;
 
+  color: rgb(226, 195, 255);
+}
 @keyframes fadeIn {
   from {
     opacity: 0;

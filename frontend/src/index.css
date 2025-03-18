@@ -110,13 +110,17 @@
   --table-border: var(--input-border);
 }
 
-
+html {
+  scroll-behavior: smooth;
+}
 body{
   margin: 0;
   box-sizing: border-box;
   font-family: "Rubik", sans-serif;
   padding: 0;
   min-width: 1024px;
+  scroll-behavior: smooth;
+
   overflow-x: auto;
   /* background-image: url(/public/background3.jpg);
   background-size: cover; */

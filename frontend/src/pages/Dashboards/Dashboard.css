@@ -1,1 +1,257 @@
-/* All styles removed for simplicity */
+/* Dashboard.css */
+:root {
+  --recruiter-primary: #4a90e2;
+  --candidate-primary: #00c853;
+  --sidebar-width: 240px;
+  --collapsed-width: 72px;
+}
+
+/* Base Dashboard Styles */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  background: #ffffff;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: fixed;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.dashboard-container.collapsed .sidebar {
+  width: var(--collapsed-width);
+}
+
+/* Recruiter Specific Styles */
+.recruiter-dashboard .sidebar {
+  border-right: 3px solid var(--recruiter-primary);
+}
+
+.recruiter-dashboard .nav-item.active {
+  background: rgba(74,144,226,0.1);
+  color: var(--recruiter-primary);
+  border-left: 3px solid var(--recruiter-primary);
+}
+
+/* Candidate Specific Styles */
+.candidate-dashboard .sidebar {
+  border-right: 3px solid var(--candidate-primary);
+}
+
+.candidate-dashboard .nav-item.active {
+  background: rgba(0,200,83,0.1);
+  color: var(--candidate-primary);
+  border-left: 3px solid var(--candidate-primary);
+}
+
+/* Common Sidebar Styles */
+.sidebar-header {
+  padding: 1rem 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 2px solid #eee;
+}
+
+.logo {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.dashboard-container.collapsed .logo {
+  opacity: 0;
+}
+
+.collapse-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #7f8c8d;
+  padding: 0.5rem;
+transform: translateY(3px);
+  transition: all 0.3s ease;
+}
+
+.collapse-btn:hover {
+  color: #2c3e50;
+  scale: 1.1;
+
+}
+
+.dashboard-container.collapsed .collapse-btn {
+ rotate: 180deg;
+
+}
+
+.sidebar-nav {
+  padding: 1.5rem 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 8px;
+  color: #7f8c8d;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  gap: 1rem;
+}
+
+.nav-item:hover {
+  background: #f8f9fa;
+}
+
+.nav-icon {
+  font-size: 1.25rem;
+  min-width: 32px;
+}
+
+.nav-text {
+  white-space: nowrap;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+/* Collapsed State */
+.dashboard-container.collapsed .nav-text {
+  transform: translateX(-30px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Main Content Area */
+.dashboard-content {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-container.collapsed .dashboard-content {
+  margin-left: var(--collapsed-width);
+}
+
+/* Header Styles */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem 2rem;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Search Bar */
+.search-bar {
+  position: relative;
+  flex: 1;
+  max-width: 600px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #95a5a6;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: var(--recruiter-primary);
+  box-shadow: 0 0 0 2px rgba(74,144,226,0.2);
+}
+
+/* Profile Section */
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.profile-section:hover {
+  background: #f8f9fa;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #eee;
+}
+.profile-name-role{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  
+}
+.profile-name-role span{
+  font-size: 14px;
+  font-weight: 500;
+  
+}
+.profile-name-role .user-role{
+  color: #2c3e50c2;
+  
+}
+.profile-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 0.5rem;
+  min-width: 200px;
+  z-index: 1000;
+}
+
+.menu-item {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #2c3e50;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: #f8f9fa;
+}
+.menu-logout{
+  color: red;
+}
+/* Content Area */
+.content-wrapper {
+  padding: 2rem;
+  min-height: calc(100vh - 80px);
+}
+

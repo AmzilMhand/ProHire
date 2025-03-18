@@ -25,6 +25,7 @@ import { Pagination, Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
+import GuestRoute from "./components/GuestRoute";
 
 function Home() {
   return (
@@ -68,32 +69,53 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/recruiter/auth" element={<RecruiterAuth />} />
             <Route path="/candidate/auth" element={<CandidateAuth />} />
-            
             {/* Email verification and password reset */}
             <Route path="/verify-email/:token" element={<VerifyEmail />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
-            <Route path="/candidate/reset-password/:token" element={<ResetPassword />} />
-            <Route path="/recruiter/reset-password/:token" element={<ResetPassword />} />
-            
-            {/* Protected Routes - Candidate */}
-            <Route 
-              path="/candidate/dashboard" 
-              element={
-                <PrivateRoute requiredRole="candidate">
-                  <CandidateDashboard />
-                </PrivateRoute>
-              } 
+            <Route
+              path="/candidate/reset-password/:token"
+              element={<ResetPassword />}
             />
-            
-            {/* Protected Routes - Recruiter */}
-            <Route 
-              path="/recruiter/dashboard" 
+            <Route
+              path="/recruiter/reset-password/:token"
+              element={<ResetPassword />}
+            />
+            // Auth routes - only accessible when NOT logged in
+            <Route
+              path="/recruiter/auth"
+              element={
+                <GuestRoute>
+                  <RecruiterAuth />
+                </GuestRoute>
+              }
+            />
+            <Route
+              path="/candidate/auth"
+              element={
+                <GuestRoute>
+                  <CandidateAuth />
+                </GuestRoute>
+              }
+            />
+            // Protected routes - only accessible when logged in
+            <Route
+              path="/recruiter/dashboard"
               element={
                 <PrivateRoute requiredRole="recruiter">
                   <RecruiterDashboard />
                 </PrivateRoute>
-              } 
+              }
             />
+            <Route
+              path="/candidate/dashboard"
+              element={
+                <PrivateRoute requiredRole="candidate">
+                  <CandidateDashboard />
+                </PrivateRoute>
+              }
+            />
+              <Route path="/recruiter/*" element={<RecruiterDashboard />} />
+              <Route path="/candidate/*" element={<CandidateDashboard />} />
           </Routes>
         </div>
       </Router>

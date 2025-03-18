@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
       setUser(JSON.parse(storedUser));
     }
     setLoading(false);
+    
   }, []);
 
   const login = async (email, password) => {

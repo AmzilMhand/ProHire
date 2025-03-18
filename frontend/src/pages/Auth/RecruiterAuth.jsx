@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaFacebookF, FaGoogle, FaLinkedinIn, FaTimes, FaSpinner } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import authAPI from '../../services/authAPI';
 import './RecruiterAuth.css';
 
 const RecruiterAuth = () => {
+  const { isAuthenticated, currentUser } = useAuth();
+
   const [signIn, setSignIn] = useState(true);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
@@ -68,8 +70,18 @@ const RecruiterAuth = () => {
       setLoading(false);
     }
   };
-
+  useEffect(() => {
+    if (isAuthenticated()) {
+      navigate(currentUser.role === 'recruiter' 
+        ? '/recruiter/dashboard' 
+        : '/candidate/dashboard'
+      );
+    }
+  }, [isAuthenticated, currentUser, navigate]);
   return (
+    <div className='auth-cantainer'>
+            <Link to={"/"} className="Home-Logo"> ProHire</Link>
+      
     <div className={`container ${signIn ? '' : 'right-panel-active'}`}>
       {/* Forgot Password Modal */}
       {showForgotPassword && (
@@ -239,6 +251,8 @@ const RecruiterAuth = () => {
             <button className="ghost-button" onClick={() => setSignIn(true)}>
               Access Account
             </button>
+            <span className='im-not'> <Link to={"/candidate/auth"}>I'm not a Recruiter</Link></span>
+
           </div>
           <div className="overlay-panel right-overlay-panel">
             <h1 className="title">New to ProHire?</h1>
@@ -248,9 +262,12 @@ const RecruiterAuth = () => {
             <button className="ghost-button" onClick={() => setSignIn(false)}>
               Begin Registration
             </button>
+            
+            <span className='im-not'> <Link to={"/candidate/auth"}>I'm not a Recruiter</Link></span>
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
