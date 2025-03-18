@@ -1,0 +1,38 @@
+Project Structure:
+
+/src
+├── App.css
+├── App.jsx
+├── App.test.js
+├── components
+│   ├── Header
+│   │   ├── Header.css
+│   │   └── Header.jsx
+│   ├── Hero
+│   │   ├── CandidateHero.css
+│   │   ├── CandidateHero.jsx
+│   │   ├── RecruiterHero.css
+│   │   └── RecruiterHero.jsx
+│   └── How Its Work
+│       ├── HowItsWork.css
+│       └── HowItsWork.jsx
+├── context
+│   ├── AuthContext.jsx
+│   └── JobContext.jsx
+├── index.css
+├── index.js
+├── logo.svg
+├── pages
+│   └── Auth
+│       ├── CandidateAuth.css
+│       ├── CandidateAuth.jsx
+│       ├── RecruiterAuth.css
+│       └── RecruiterAuth.jsx
+├── reportWebVitals.js
+├── services
+│   ├── api.js
+│   ├── authAPI.js
+│   ├── candidateAPI.js
+│   ├── jobAPI.js
+│   └── recruiterAPI.js
+└── setupTests.js

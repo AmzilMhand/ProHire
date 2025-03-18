@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+:root {
+  /* Primary Colors */
+  --primary-color: #4A90E2;
+  --primary-hover-color: #357ABD;
+
+  /* Secondary Colors */
+  --secondary-color: #50E3C2;
+  --secondary-hover-color: #3FB39E;
+
+  /* Background Colors */
+  --background-light: #F8F9FA;
+  --background-white: #FFFFFF;
+
+  /* Text Colors */
+  --text-dark: #2C3E50;
+  --text-medium: #666666;
+  --text-light: #999999;
+  --text-white: #FFFFFF;
+
+  /* Status Colors */
+  --status-success: #4CAF50;
+  --status-warning: #FFC107;
+  --status-error: #F44336;
+
+  /* Button Colors */
+  --button-primary-bg: var(--primary-color);
+  --button-primary-text: var(--text-white);
+  --button-primary-hover: var(--primary-hover-color);
+
+  --button-secondary-bg: #E0E0E0;
+  --button-secondary-text: var(--text-dark);
+  --button-secondary-hover: #CCCCCC;
+
+  --button-success-bg: var(--status-success);
+  --button-success-text: var(--text-white);
+  --button-success-hover: #388E3C;
+
+  --button-danger-bg: var(--status-error);
+  --button-danger-text: var(--text-white);
+  --button-danger-hover: #D32F2F;
+
+  /* Input Fields */
+  --input-bg: var(--background-white);
+  --input-border: #E0E0E0;
+  --input-focus-border: var(--primary-color);
+  --input-placeholder: var(--text-light);
+  --input-error-border: var(--status-error);
+  --input-error-text: var(--status-error);
+
+  /* Navbar */
+  --navbar-bg: var(--text-dark);
+  --navbar-text: var(--text-white);
+  --navbar-hover: var(--primary-color);
+  --navbar-active: var(--secondary-color);
+
+  /* Footer */
+  --footer-bg: var(--text-dark);
+  --footer-text: var(--text-white);
+  --footer-link: var(--secondary-color);
+  --footer-link-hover: var(--primary-color);
+
+  /* Job Cards */
+  --job-card-bg: var(--background-white);
+  --job-card-border: var(--input-border);
+  --job-card-title: var(--text-dark);
+  --job-card-description: var(--text-medium);
+
+  /* Alerts & Notifications */
+  --alert-success-bg: var(--status-success);
+  --alert-success-text: var(--text-white);
+
+  --alert-error-bg: var(--status-error);
+  --alert-error-text: var(--text-white);
+
+  --alert-warning-bg: var(--status-warning);
+  --alert-warning-text: var(--text-dark);
+
+  --alert-info-bg: var(--primary-color);
+  --alert-info-text: var(--text-white);
+
+  /* Progress Bars */
+  --progress-bg: var(--input-border);
+  --progress-primary: var(--primary-color);
+  --progress-success: var(--status-success);
+  --progress-warning: var(--status-warning);
+  --progress-error: var(--status-error);
+
+  /* Icons */
+  --icon-default: var(--text-medium);
+  --icon-hover: var(--primary-color);
+  --icon-active: var(--secondary-color);
+
+  /* Modals & Popups */
+  --modal-overlay: rgba(0, 0, 0, 0.5);
+  --modal-bg: var(--background-white);
+  --modal-header: var(--text-dark);
+  --modal-text: var(--text-medium);
+  --modal-close: var(--text-light);
+  --modal-close-hover: var(--status-error);
+
+  /* Tables */
+  --table-header-bg: var(--text-dark);
+  --table-header-text: var(--text-white);
+  --table-row-even: var(--background-white);
+  --table-row-odd: var(--background-light);
+  --table-row-hover: var(--input-border);
+  --table-text: var(--text-dark);
+  --table-border: var(--input-border);
+}
+
+
+body{
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Rubik", sans-serif;
+  padding: 0;
+  min-width: 1024px;
+  overflow-x: auto;
+  /* background-image: url(/public/background3.jpg);
+  background-size: cover; */
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4e36a6 #ece8f3;
+  
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+
+}
+
+*::-webkit-scrollbar-track {
+  background: #ece8f3;
+  border-radius: 10px;
+
+
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #4e36a6;
+  border-radius: 10px;
+  border: 2px solid #ece8f3;
+  transition: all 0.3s ease;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.no-scroll * {
+  scrollbar-width: none;
+}
+
+.no-scroll *::-webkit-scrollbar {
+  display: none;
+}
+a{
+  text-decoration: none;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

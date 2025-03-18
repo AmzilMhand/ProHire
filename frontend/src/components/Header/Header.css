@@ -1,0 +1,126 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding: 0 8%;
+ z-index: 100;
+ position: relative;
+}
+
+.header .logo h1 {
+    color: black;
+}
+
+.nav-links {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.nav-links .nav-link {
+    position: relative;
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.nav-links .nav-link:hover {
+    color: fuchsia;
+}
+
+.nav-links .nav-link.active {
+    color: blueviolet;
+    transition: all 0.3s ease-in-out    ;
+}
+
+.nav-links .nav-link.active::after {
+    content: "";
+    width: 100%;
+    height: 3px;
+    
+    background: blueviolet;
+    
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+}
+.header .buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header .buttons .login-button,
+.header .buttons .register-button {
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border: none;
+    background-color: transparent;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.header .buttons .login-button {
+    border: 2px solid #5500ff;
+    color: #5500ff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.header .buttons .login-button svg {
+    font-size: 14px;
+}
+.header .buttons .login-button:hover {
+    background-color: #7a38ff;
+    color: #fff;
+}
+.header .buttons .register-button {
+    background-color: #5500ff;
+    color: #fff;
+    border: 2px solid #5500ff;
+
+}
+.header .buttons .register-button:hover {
+    background-color: #7a38ff;
+    color: #fff;
+    border: 2px solid #7a38ff;
+
+}
+
+.dropmenu{
+    display: none;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #e9e9e9;
+    border-radius: 0 0 10px 10px ;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+.dropmenu.active{
+    position: absolute;
+    top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dropmenu a{
+  text-decoration: none;
+  color: #000;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+}
+.dropmenu a:hover{
+    color: blueviolet;
+    font-size: 14px;
+    font-weight: 500;
+  }

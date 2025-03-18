@@ -1,0 +1,42 @@
+/* Error messages */
+.error-message {
+  color: #f44336;
+  margin: 10px 0;
+  font-size: 14px;
+  text-align: center;
+  width: 100%;
+}
+
+/* Success messages */
+.success-message {
+  color: #4CAF50;
+  margin: 10px 0;
+  font-size: 14px;
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(76, 175, 80, 0.1);
+  border-radius: 5px;
+}
+
+/* Link button for forgot password */
+.link-button {
+  background: none;
+  border: none;
+  color: #333;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.link-button:hover {
+  color: #4285f4;
+}
+
+.extra-actions {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
