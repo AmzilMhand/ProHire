@@ -26,6 +26,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import GuestRoute from "./components/GuestRoute";
+import JobsPage from "./pages/Recruiter/JobsPage";
 
 function Home() {
   return (
@@ -67,20 +68,12 @@ function App() {
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Home />} />
-            <Route path="/recruiter/auth" element={<RecruiterAuth />} />
-            <Route path="/candidate/auth" element={<CandidateAuth />} />
-            {/* Email verification and password reset */}
+            
+            {/* Auth Routes */}
             <Route path="/verify-email/:token" element={<VerifyEmail />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
-            <Route
-              path="/candidate/reset-password/:token"
-              element={<ResetPassword />}
-            />
-            <Route
-              path="/recruiter/reset-password/:token"
-              element={<ResetPassword />}
-            />
-            // Auth routes - only accessible when NOT logged in
+
+            {/* Guest Routes */}
             <Route
               path="/recruiter/auth"
               element={
@@ -97,15 +90,21 @@ function App() {
                 </GuestRoute>
               }
             />
-            // Protected routes - only accessible when logged in
+
+            {/* Recruiter Dashboard Routes */}
             <Route
-              path="/recruiter/dashboard"
+              path="/recruiter/"
               element={
                 <PrivateRoute requiredRole="recruiter">
                   <RecruiterDashboard />
                 </PrivateRoute>
               }
-            />
+            >
+              <Route path="jobs" element={<JobsPage />} />
+           
+            </Route>
+
+            {/* Candidate Dashboard Routes */}
             <Route
               path="/candidate/dashboard"
               element={
@@ -113,14 +112,16 @@ function App() {
                   <CandidateDashboard />
                 </PrivateRoute>
               }
-            />
-              <Route path="/recruiter/*" element={<RecruiterDashboard />} />
-              <Route path="/candidate/*" element={<CandidateDashboard />} />
+            >
+             
+            </Route>
+
+        <Route path="/recruiter/*" element={<RecruiterDashboard />} /> 
+            <Route path="/candidate/*" element={<CandidateDashboard />} />
           </Routes>
         </div>
       </Router>
     </AuthProvider>
   );
 }
-
 export default App;
