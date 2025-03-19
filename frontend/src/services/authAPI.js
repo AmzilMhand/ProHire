@@ -8,10 +8,7 @@ const authAPI = {
   register: async (userData) => {
     try {
       const response = await api.post(`${AUTH_URL}/register`, userData);
-      if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-      }
+      // Don't store token and user data in localStorage after registration
       return response.data;
     } catch (error) {
       throw handleApiError(error);
@@ -36,7 +33,8 @@ const authAPI = {
   logout: () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    return api.get(`${AUTH_URL}/logout`);
+    // Don't make an API call that might cause a redirect
+    return Promise.resolve();
   },
 
   // Get the current user

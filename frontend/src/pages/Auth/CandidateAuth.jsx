@@ -272,8 +272,7 @@ const CandidateAuth = () => {
               onChange={handleInputChange}
               required
             />
-            <a
-              href="#"
+            <button
               className="anchor"
               onClick={(e) => {
                 e.preventDefault();
@@ -281,7 +280,7 @@ const CandidateAuth = () => {
               }}
             >
               Forgot Password?
-            </a>
+            </button>
             {error && signIn && <div className="error-message">{error}</div>}
             <button className="button" type="submit" disabled={loading}>
               {loading ? <FaSpinner className="spinner" /> : "Access Account"}

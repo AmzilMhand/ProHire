@@ -1,6 +1,6 @@
 // RecruiterDashboard.jsx
 import React, { useState } from "react";
-import { Outlet, Link, useLocation, NavLink } from "react-router-dom";
+import { Outlet, Link, NavLink, useNavigate } from "react-router-dom";
 import {
   FiHome,
   FiBriefcase,
@@ -12,23 +12,21 @@ import {
   FiChevronLeft,
   FiLogOut,
 } from "react-icons/fi";
-import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
 import { useAuth } from '../../context/AuthContext';
+import LogoutButton from "../../components/LogoutButton";
 import "./Dashboard.css";
 
 const RecruiterDashboard = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   const menuItems = [
@@ -109,9 +107,7 @@ const RecruiterDashboard = () => {
                 <Link to="/recruiter/settings" className="menu-item">
                   <FiSettings /> Settings
                 </Link>
-                <button className="menu-item menu-logout" onClick={logout}>
-                  <FiLogOut /> Logout
-                </button>
+                <LogoutButton />
               </div>
             )}
           </div>

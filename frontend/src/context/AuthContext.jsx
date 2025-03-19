@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import authAPI from '../services/authAPI';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
@@ -26,16 +27,16 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     const data = await authAPI.register(userData);
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('user', JSON.stringify(data.user));
-    setUser(data.user);
     return data;
   };
 
-  const logout = () => {
+  const logout = (redirectToHome = true) => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
+    if (redirectToHome) {
+      // We'll handle navigation in the components
+    }
   };
 
   // Add isAuthenticated function

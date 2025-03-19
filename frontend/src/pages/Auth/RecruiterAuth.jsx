@@ -43,7 +43,7 @@ const RecruiterAuth = () => {
         setSignIn(true); // Switch to sign-in panel
         setError(''); // Clear any errors
         // Reset form data
-        setFormData({ ...formData, name: '', email: '', password: '' });
+        setFormData({ name: '', email: '', password: '' });
         // Show success message in the page
         setSuccessMessage('Registration successful! Please sign in to access your account.');
       }
@@ -228,12 +228,12 @@ const RecruiterAuth = () => {
             required
           />
           {error && signIn && <div className="error-message">{error}</div>}
-          <a href="#" className="anchor" onClick={(e) => {
+          <button className="anchor" onClick={(e) => {
             e.preventDefault();
             setShowForgotPassword(true);
           }}>
             Forgot Password?
-          </a>
+          </button>
           <button className="button" type="submit" disabled={loading}>
             {loading ? <FaSpinner className="spinner" /> : 'Access Account'}
           </button>

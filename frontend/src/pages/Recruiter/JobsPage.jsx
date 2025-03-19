@@ -13,8 +13,8 @@ import { useAuth } from '../../context/AuthContext';
 const JobsPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [, setLoading] = useState(false);
+  const [, setError] = useState(null);
   const { user } = useAuth(); 
   const [formData, setFormData] = useState({
     title: '',

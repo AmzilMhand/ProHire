@@ -1,6 +1,6 @@
 // CandidateDashboard.jsx
 import React, { useState } from 'react';
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   FiHome, 
   FiBell, 
@@ -14,11 +14,13 @@ import {
 import './Dashboard.css';
 import { useAuth } from '../../context/AuthContext';
 import { MdKeyboardArrowDown } from 'react-icons/md';
+import LogoutButton from '../../components/LogoutButton';
 
 const CandidateDashboard = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
 
   const menuItems = [
@@ -27,6 +29,11 @@ const CandidateDashboard = () => {
     { path: '/candidate/alerts', name: 'Job Alerts', icon: <FiBell /> },
     { path: '/candidate/profile', name: 'My Profile', icon: <FiUser /> }
   ];
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <div className={`dashboard-container candidate-dashboard ${isCollapsed ? 'collapsed' : ''}`}>
@@ -61,24 +68,21 @@ const CandidateDashboard = () => {
 
           <div className="profile-section" onClick={() => setShowProfileMenu(!showProfileMenu)}>
             <img
-                          src={user?.picture || '/candidat-avatar.png'}
-                          alt="Profile"
-                          className="profile-pic"
-                        />
-                        <div className="profile-name-role">
-            
-                        <span>{user?.name || 'User'}</span>
-                        <span className="user-role">{user?.role || 'User'}</span>
-                        </div>
-                        <MdKeyboardArrowDown/>
+              src={user?.picture || '/candidat-avatar.png'}
+              alt="Profile"
+              className="profile-pic"
+            />
+            <div className="profile-name-role">
+              <span>{user?.name || 'User'}</span>
+              <span className="user-role">{user?.role || 'User'}</span>
+            </div>
+            <MdKeyboardArrowDown/>
             {showProfileMenu && (
               <div className="profile-menu">
                 <Link to="/candidate/settings" className="menu-item">
                   <FiSettings /> Settings
                 </Link>
-                <button className="menu-item menu-logout" onClick={logout}>
-                  <FiLogOut /> Logout
-                </button>
+                <LogoutButton />
               </div>
             )}
           </div>
