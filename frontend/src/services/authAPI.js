@@ -30,11 +30,21 @@ const authAPI = {
   },
 
   // Logout the current user
-  logout: () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    // Don't make an API call that might cause a redirect
-    return Promise.resolve();
+  logout: async () => {
+    try {
+      // Make an API call to the backend logout endpoint
+      await api.get(`${AUTH_URL}/logout`);
+      // Then clear local storage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      return { success: true };
+    } catch (error) {
+      // Even if the API call fails, still clear local storage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      console.error('Logout error:', error);
+      return { success: true };
+    }
   },
 
   // Get the current user

@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import authAPI from '../services/authAPI';
-import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
@@ -30,12 +29,19 @@ export const AuthProvider = ({ children }) => {
     return data;
   };
 
-  const logout = (redirectToHome = true) => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setUser(null);
-    if (redirectToHome) {
-      // We'll handle navigation in the components
+  const logout = async (redirectToHome = true) => {
+    try {
+      await authAPI.logout();
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      setUser(null);
+      return { success: true };
+    } catch (error) {
+      console.error('Error in logout context:', error);
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      setUser(null);
+      return { success: false, error };
     }
   };
 
