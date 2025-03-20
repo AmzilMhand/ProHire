@@ -26,7 +26,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import GuestRoute from "./components/GuestRoute";
-import JobsPage from "./pages/Recruiter/JobsPage";
+import JobDetailPage from "./pages/Recruiter/Jobs/[id]/page";
+import Jobs from "./pages/Recruiter/Jobs/page";
 
 function Home() {
   return (
@@ -100,7 +101,8 @@ function App() {
                 </PrivateRoute>
               }
             >
-              <Route path="jobs" element={<JobsPage />} />
+              <Route path="jobs" element={<Jobs />} />
+              <Route path="/recruiter/jobs/:id" element={<JobDetailPage />} />
            
             </Route>
 
