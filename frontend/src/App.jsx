@@ -26,9 +26,16 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import GuestRoute from "./components/GuestRoute";
-import JobDetailPage from "./pages/Recruiter/Jobs/[id]/page";
+import JobDetailPage from "./pages/Recruiter/Jobs/jobDetails/page";
 import Jobs from "./pages/Recruiter/Jobs/page";
-
+import DashboardPage from "./pages/Recruiter/dashboard/page";
+import RecruiterLayout from "./components/layout/RecruiterLayout";
+import Candidates from "./pages/Recruiter/candidates/Candidates";
+import Interviews from "./pages/Recruiter/interviews/Interviews";
+import Analytics from "./pages/Recruiter/analytics/Analytics";
+import Reports from "./pages/Recruiter/reports/Reports";
+import Settings from "./pages/Recruiter/settings/Settings";
+import Help from "./pages/Recruiter/help/Help";
 function Home() {
   return (
     <>
@@ -93,16 +100,20 @@ function App() {
             />
 
             {/* Recruiter Dashboard Routes */}
-            <Route
-              path="/recruiter/"
-              element={
-                <PrivateRoute requiredRole="recruiter">
-                  <RecruiterDashboard />
-                </PrivateRoute>
-              }
-            >
-              <Route path="jobs" element={<Jobs />} />
-              <Route path="/recruiter/jobs/:id" element={<JobDetailPage />} />
+            <Route element={
+          <PrivateRoute requiredRole="recruiter">
+            <RecruiterLayout />
+          </PrivateRoute>
+        }>
+          <Route path="/recruiter/dashboard" element={<DashboardPage />} />
+            <Route path="/recruiter/jobs" element={<Jobs />} />
+            <Route path="/recruiter/candidates" element={<Candidates />} />
+            <Route path="/recruiter/interviews" element={<Interviews />} />
+            <Route path="/recruiter/analytics" element={<Analytics />} />
+            <Route path="/recruiter/reports" element={<Reports />} />
+            <Route path="/recruiter/settings" element={<Settings />} />
+            <Route path="/recruiter/help" element={<Help />} />
+            <Route path="/recruiter/jobs/:id" element={<JobDetailPage />} />
            
             </Route>
 
