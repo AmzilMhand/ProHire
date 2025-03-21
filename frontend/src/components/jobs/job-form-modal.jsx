@@ -4,12 +4,19 @@ import { JobFormStep2 } from "./job-form-step2"
 import { JobFormStep3 } from "./job-form-step3"
 import { JobFormStep4 } from "./job-form-step4"
 import { JobFormReview } from "./job-form-review"
+import api from '../../services/api';
+
+// Configure axios with base URL
+const API_URL = 'http://localhost:5050';  // Backend runs on port 5050
+
+console.log('API URL configured as:', API_URL);
 
 export function JobFormModal({ open, onClose, onSubmit, initialData }) {
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState(
     initialData || {
       title: "",
+      company: "",
       department: "",
       experienceLevel: "",
       skills: [],
@@ -51,6 +58,7 @@ export function JobFormModal({ open, onClose, onSubmit, initialData }) {
     if (!initialData) {
       setFormData({
         title: "",
+        company: "",
         department: "",
         experienceLevel: "",
         skills: [],
@@ -62,34 +70,93 @@ export function JobFormModal({ open, onClose, onSubmit, initialData }) {
     }
   }
 
-  const generateDescription = () => {
-    // In a real app, this would call your AI API to generate a description
-    // For now, we'll just create a sample description based on the form data
-    const description = `
-We are looking for a ${formData.experienceLevel} ${formData.title} to join our ${formData.department} team. 
+  const generateDescription = async () => {
+    try {
+      // Validate required fields before making the API call
+      if (!formData.title || !formData.company || !formData.department || 
+          !formData.experienceLevel || !formData.skills || !formData.location || 
+          !formData.contractType) {
+        console.error('Missing required fields');
+        alert('Please fill in all required fields before generating description');
+        return;
+      }
 
-The ideal candidate will have experience with ${formData.skills.join(", ")}. 
+      console.log('Generating description with data:', formData);
+      console.log('Making request to:', `${API_URL}/api/ai/generate-description`);
+      console.log('Request method:', 'POST');
+      
+      // Show loading state to user
+      updateFormData({ description: "Generating description..." });
+      
+      // Test the API endpoint first
+      try {
+        const testResponse = await api.get('/api/ai/test');
+        console.log('Test endpoint response:', testResponse.data);
+      } catch (testError) {
+        console.error('Test endpoint failed:', testError);
+        throw new Error('Cannot connect to AI service - test endpoint failed');
+      }
+      
+      const response = await api.post('/api/ai/generate-description', {
+        title: formData.title,
+        company: formData.company,
+        department: formData.department,
+        experienceLevel: formData.experienceLevel,
+        skills: formData.skills,
+        location: formData.location,
+        contractType: formData.contractType,
+        salaryRange: formData.salaryRange
+      });
 
-This is a ${formData.contractType} position located in ${formData.location}.
-${formData.salaryRange ? `Salary range: ${formData.salaryRange}` : ""}
+      console.log('API Response:', response.data);
 
-As a ${formData.title}, you will be responsible for designing, developing, and implementing solutions that meet our business needs. You will work closely with cross-functional teams to deliver high-quality products.
+      if (response.data && response.data.success && response.data.description) {
+        updateFormData({ description: response.data.description });
+        if (response.data.note) {
+          alert(response.data.note); // Show any notes from the backend
+        }
+      } else {
+        console.error('Invalid response from API:', response.data);
+        throw new Error('Invalid response structure');
+      }
+    } catch (error) {
+      console.error('Error generating description:', {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+        config: error.config
+      });
+      
+      let errorMessage = 'Failed to generate description. ';
+      
+      if (error.response?.data?.error) {
+        // Use the specific error message from the backend
+        errorMessage += error.response.data.error;
+      } else if (error.code === 'ECONNABORTED') {
+        errorMessage += 'Request timed out. The AI service is taking too long to respond. ';
+      } else if (error.message.includes('Network Error')) {
+        errorMessage += `Cannot connect to the backend server at ${API_URL}. Please ensure the server is running. `;
+      } else if (!error.response) {
+        errorMessage += `Network error. Please ensure the backend server is running at ${API_URL}. `;
+      }
+      
+      if (error.response?.data?.details && process.env.NODE_ENV === 'development') {
+        console.error('Error details:', error.response.data.details);
+      }
+      
+      errorMessage += ' Falling back to basic description template.';
+      alert(errorMessage);
+      
+      // Clear the "Generating description..." message before falling back
+      fallbackToBasicDescription();
+    }
+  };
 
-Requirements:
-- ${formData.experienceLevel} experience
-- Proficiency in ${formData.skills.slice(0, 2).join(" and ")}
-- Strong problem-solving skills
-- Excellent communication and teamwork abilities
-
-Benefits:
-- Competitive salary
-- Health insurance
-- Flexible working hours
-- Professional development opportunities
-    `.trim()
-
-    updateFormData({ description })
-  }
+  // Simple fallback in case the API fails
+  const fallbackToBasicDescription = () => {
+    // Clear the description field or set to empty
+    updateFormData({ description: "" });
+  };
 
   if (!open) return null
 
@@ -135,7 +202,7 @@ Benefits:
             />
           </div>
 
-          <div className="px-6 py-4">
+          <div className="max-h-[60vh] overflow-y-auto px-6 py-4">
             {step === 1 && <JobFormStep1 formData={formData} updateFormData={updateFormData} />}
             {step === 2 && <JobFormStep2 formData={formData} updateFormData={updateFormData} />}
             {step === 3 && <JobFormStep3 formData={formData} updateFormData={updateFormData} />}
@@ -183,4 +250,3 @@ Benefits:
     </div>
   )
 }
-

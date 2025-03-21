@@ -8,7 +8,8 @@ export function JobCard({ job, onEdit, onDelete }) {
   const navigate = useNavigate();
 
   const handleViewDetails = () => {
-    navigate("/recruiter/jobs/1");  }
+    navigate(`/recruiter/jobs/${job._id}`);
+  }
 
   return (
     <>
@@ -219,4 +220,3 @@ export function JobCard({ job, onEdit, onDelete }) {
     </>
   )
 }
-

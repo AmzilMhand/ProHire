@@ -42,6 +42,20 @@ export function JobFormStep1({ formData, updateFormData }) {
       </div>
 
       <div>
+        <label htmlFor="company" className="mb-1 block text-sm font-medium text-gray-700">
+          Company Name <span className="text-red-500">*</span>
+        </label>
+        <input
+          id="company"
+          className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 focus:border-[#4a90e2] focus:outline-none focus:ring-1 focus:ring-[#4a90e2]"
+          placeholder="e.g. Acme Inc."
+          value={formData.company}
+          onChange={(e) => updateFormData({ company: e.target.value })}
+          required
+        />
+      </div>
+
+      <div>
         <label htmlFor="department" className="mb-1 block text-sm font-medium text-gray-700">
           Department <span className="text-red-500">*</span>
         </label>
@@ -87,4 +101,3 @@ export function JobFormStep1({ formData, updateFormData }) {
     </div>
   )
 }
-
