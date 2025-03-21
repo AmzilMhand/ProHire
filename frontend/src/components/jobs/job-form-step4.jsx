@@ -33,7 +33,7 @@ export function JobFormStep4({ formData, updateFormData, generateDescription }) 
         </div>
         <textarea
           id="description"
-          className="block min-h-[200px] w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 focus:border-[#4a90e2] focus:outline-none focus:ring-1 focus:ring-[#4a90e2]"
+          className="block min-h-[200px] max-h-[300px] w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 focus:border-[#4a90e2] focus:outline-none focus:ring-1 focus:ring-[#4a90e2] overflow-y-auto resize-y"
           placeholder="Enter job description or click Generate to create one automatically"
           value={formData.description}
           onChange={(e) => updateFormData({ description: e.target.value })}
@@ -47,4 +47,3 @@ export function JobFormStep4({ formData, updateFormData, generateDescription }) 
     </div>
   )
 }
-

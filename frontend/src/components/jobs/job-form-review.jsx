@@ -10,6 +10,10 @@ export function JobFormReview({ formData }) {
             <dd className="col-span-2 text-sm text-gray-900">{formData.title || "Not specified"}</dd>
           </div>
           <div className="grid grid-cols-3 gap-4">
+            <dt className="text-sm font-medium text-gray-500">Company:</dt>
+            <dd className="col-span-2 text-sm text-gray-900">{formData.company || "Not specified"}</dd>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
             <dt className="text-sm font-medium text-gray-500">Department:</dt>
             <dd className="col-span-2 text-sm text-gray-900">{formData.department || "Not specified"}</dd>
           </div>
@@ -62,7 +66,7 @@ export function JobFormReview({ formData }) {
         <h3 className="text-lg font-medium text-gray-900">Job Description</h3>
         <div className="my-2 h-px w-full bg-gray-200"></div>
         <div className="rounded-md bg-gray-50 p-4">
-          <p className="text-sm text-gray-900 whitespace-pre-line">
+          <p className="text-sm text-gray-900 whitespace-pre-line max-h-[200px] overflow-y-auto">
             {formData.description || "No description provided"}
           </p>
         </div>
@@ -70,4 +74,3 @@ export function JobFormReview({ formData }) {
     </div>
   )
 }
-

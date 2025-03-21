@@ -1,5 +1,5 @@
 export function JobFormStep3({ formData, updateFormData }) {
-  const contractTypes = ["Full-time", "Part-time", "Contract", "Temporary", "Internship", "Freelance"]
+  const contractTypes = ['Full-time', 'Part-time', 'Contract', 'Freelance', 'Internship', 'Temporary']
 
   return (
     <div className="space-y-4">

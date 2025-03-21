@@ -1,116 +1,91 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { JobCard } from "../../../components/jobs/job-card"
 import { JobFormModal } from "../../../components/jobs/job-form-modal"
+import jobAPI from "../../../services/jobAPI"
 
-const initialJobs = [
-  {
-    id: "1",
-    title: "Senior Frontend Developer",
-    department: "Engineering",
-    experienceLevel: "Senior (5+ years)",
-    skills: ["React", "TypeScript", "CSS", "HTML"],
-    location: "Remote",
-    contractType: "Full-time",
-    salaryRange: "$90,000 - $120,000",
-    description:
-      "We are looking for a Senior Frontend Developer to join our team. You will be responsible for building user interfaces for our web applications. The ideal candidate has strong experience with React, TypeScript, and modern frontend development practices.",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: "2",
-    title: "UX/UI Designer",
-    department: "Design",
-    experienceLevel: "Mid-level (2-5 years)",
-    skills: ["Figma", "Adobe XD", "User Research", "Prototyping"],
-    location: "Paris, France",
-    contractType: "Full-time",
-    salaryRange: "$70,000 - $90,000",
-    description:
-      "We're seeking a talented UX/UI Designer to create beautiful, functional interfaces for our products. You'll work closely with product managers and engineers to design intuitive user experiences.",
-    createdAt: new Date(Date.now() - 86400000).toISOString(),
-  },
-  {
-    id: "3",
-    title: "UX/UI Designer",
-    department: "Design",
-    experienceLevel: "Mid-level (2-5 years)",
-    skills: ["Figma", "Adobe XD", "User Research", "Prototyping"],
-    location: "Paris, France",
-    contractType: "Full-time",
-    salaryRange: "$70,000 - $90,000",
-    description:
-      "We're seeking a talented UX/UI Designer to create beautiful, functional interfaces for our products. You'll work closely with product managers and engineers to design intuitive user experiences.",
-    createdAt: new Date(Date.now() - 86400000).toISOString(),
-  },
-  {
-    id: "4",
-    title: "UX/UI Designer",
-    department: "Design",
-    experienceLevel: "Mid-level (2-5 years)",
-    skills: ["Figma", "Adobe XD", "User Research", "Prototyping"],
-    location: "Paris, France",
-    contractType: "Full-time",
-    salaryRange: "$70,000 - $90,000",
-    description:
-      "We're seeking a talented UX/UI Designer to create beautiful, functional interfaces for our products. You'll work closely with product managers and engineers to design intuitive user experiences.",
-    createdAt: new Date(Date.now() - 86400000).toISOString(),
-  },
-  {
-    id: "5",
-    title: "UX/UI Designer",
-    department: "Design",
-    experienceLevel: "Mid-level (2-5 years)",
-    skills: ["Figma", "Adobe XD", "User Research", "Prototyping"],
-    location: "Paris, France",
-    contractType: "Full-time",
-    salaryRange: "$70,000 - $90,000",
-    description:
-      "We're seeking a talented UX/UI Designer to create beautiful, functional interfaces for our products. You'll work closely with product managers and engineers to design intuitive user experiences.",
-    createdAt: new Date(Date.now() - 86400000).toISOString(),
-  },
-]
+const initialJobs = []
 
 export default function JobsPage() {
   const [jobs, setJobs] = useState(initialJobs)
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [editingJob, setEditingJob] = useState(null)
+  const [loading, setLoading] = useState(true)
 
-  const handleCreateJob = (jobData) => {
-    const newJob = {
-      id: Date.now().toString(),
-      ...jobData,
-      createdAt: new Date().toISOString(),
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true);
+        // Use getRecruiterJobs instead of getAllJobs to get only the current recruiter's jobs
+        const jobsData = await jobAPI.getRecruiterJobs();
+        setJobs(jobsData);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
+
+  const handleCreateJob = async (jobData) => {
+    try {
+      // Call the API to create a job in the database
+      const response = await jobAPI.createJob(jobData);
+      
+      // Update the local state with the new job from the API
+      // The response.data contains the actual job data
+      setJobs([response, ...jobs]);
+      setIsFormOpen(false);
+
+      // Show success notification
+      alert("Job created successfully!");
+    } catch (error) {
+      console.error("Error creating job:", error.response?.data || error);
+      alert(error.response?.data?.error || "Failed to create job. Please try again.");
     }
-
-    setJobs([newJob, ...jobs])
-    setIsFormOpen(false)
-
-    // Show toast notification
-    alert("Job created successfully!")
   }
 
   const handleEditJob = (jobId) => {
-    const job = jobs.find((job) => job.id === jobId)
+    const job = jobs.find((job) => job._id === jobId);
     if (job) {
-      setEditingJob(job)
-      setIsFormOpen(true)
+      setEditingJob(job);
+      setIsFormOpen(true);
     }
   }
 
-  const handleUpdateJob = (updatedJob) => {
-    setJobs(jobs.map((job) => (job.id === updatedJob.id ? updatedJob : job)))
-    setIsFormOpen(false)
-    setEditingJob(null)
+  const handleUpdateJob = async (updatedJob) => {
+    try {
+      // Call the API to update the job in the database
+      const result = await jobAPI.updateJob(updatedJob._id, updatedJob);
+      
+      // Update the local state with the updated job
+      setJobs(jobs.map((job) => (job._id === result._id ? result : job)));
+      setIsFormOpen(false);
+      setEditingJob(null);
 
-    // Show toast notification
-    alert("Job updated successfully!")
+      // Show toast notification
+      alert("Job updated successfully!");
+    } catch (error) {
+      console.error("Error updating job:", error);
+      alert("Failed to update job. Please try again.");
+    }
   }
 
-  const handleDeleteJob = (jobId) => {
-    setJobs(jobs.filter((job) => job.id !== jobId))
+  const handleDeleteJob = async (jobId) => {
+    try {
+      // Call the API to delete the job from the database
+      await jobAPI.deleteJob(jobId);
+      
+      // Update the local state by removing the deleted job
+      setJobs(jobs.filter((job) => job._id !== jobId));
 
-    // Show toast notification
-    alert("Job deleted successfully!")
+      // Show toast notification
+      alert("Job deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting job:", error);
+      alert("Failed to delete job. Please try again.");
+    }
   }
 
   return (
@@ -146,7 +121,11 @@ export default function JobsPage() {
         </button>
       </div>
 
-      {jobs.length === 0 ? (
+      {loading ? (
+        <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-12">
+          <h3 className="text-lg font-medium">Loading...</h3>
+        </div>
+      ) : jobs.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-12">
           <h3 className="text-lg font-medium">No jobs found</h3>
           <p className="text-sm text-gray-500">Get started by creating a new job.</p>
@@ -176,10 +155,10 @@ export default function JobsPage() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {jobs.map((job) => (
             <JobCard
-              key={job.id}
+              key={job._id}
               job={job}
-              onEdit={() => handleEditJob(job.id)}
-              onDelete={() => handleDeleteJob(job.id)}
+              onEdit={() => handleEditJob(job._id)}
+              onDelete={() => handleDeleteJob(job._id)}
             />
           ))}
         </div>
@@ -196,4 +175,3 @@ export default function JobsPage() {
     </div>
   )
 }
-

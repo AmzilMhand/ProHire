@@ -1,64 +1,66 @@
 import { useState, useEffect } from "react"
 import { JobFormModal } from "../../../../components/jobs/job-form-modal"
 import { useNavigate, useParams } from "react-router-dom"
-
-// Sample job data - this would come from your API
-const initialJobs = [
-  {
-    id: "1",
-    title: "Senior Frontend Developer",
-    department: "Engineering",
-    experienceLevel: "Senior (5+ years)",
-    skills: ["React", "TypeScript", "CSS", "HTML"],
-    location: "Remote",
-    contractType: "Full-time",
-    salaryRange: "$90,000 - $120,000",
-    description:
-      "We are looking for a Senior Frontend Developer to join our team. You will be responsible for building user interfaces for our web applications. The ideal candidate has strong experience with React, TypeScript, and modern frontend development practices.",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: "2",
-    title: "UX/UI Designer",
-    department: "Design",
-    experienceLevel: "Mid-level (2-5 years)",
-    skills: ["Figma", "Adobe XD", "User  Research", "Prototyping"],
-    location: "Paris, France",
-    contractType: "Full-time",
-    salaryRange: "$70,000 - $90,000",
-    description:
-      "We're seeking a talented UX/UI Designer to create beautiful, functional interfaces for our products. You'll work closely with product managers and engineers to design intuitive user experiences.",
-    createdAt: new Date(Date.now() - 86400000).toISOString(),
-  },
-]
+import jobAPI from "../../../../services/jobAPI"
 
 export default function JobDetailPage() {
   const [job, setJob] = useState(null)
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate();
 
-  const { id } = useParams(); 
+  const { id } = useParams();
+  
   useEffect(() => {
-    const foundJob = initialJobs.find((j) => j.id === id); 
-    if (foundJob) {
-      setJob(foundJob);
-    } else {
-      navigate("/recruiter/jobs");
+    const fetchJobDetails = async () => {
+      try {
+        const jobData = await jobAPI.getJobDetails(id);
+        setJob(jobData);
+      } catch (error) {
+        console.error("Error fetching job details:", error);
+        navigate("/recruiter/jobs");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobDetails();
+  }, [id, navigate]);
+
+  const handleUpdateJob = async (updatedJob) => {
+    try {
+      // Call the API to update the job in the database
+      const result = await jobAPI.updateJob(id, updatedJob);
+      setJob(result);
+      setIsFormOpen(false);
+
+      alert("Job updated successfully!");
+    } catch (error) {
+      console.error("Error updating job:", error);
+      alert("Failed to update job. Please try again.");
     }
-  }, [id]); 
-
-  const handleUpdateJob = (updatedJob) => {
-    setJob(updatedJob);
-    setIsFormOpen(false);
-
-    alert("Job updated successfully!");
   }
 
-  const handleDeleteJob = () => {
-    navigate("/recruiter/jobs");
+  const handleDeleteJob = async () => {
+    try {
+      // Call the API to delete the job from the database
+      await jobAPI.deleteJob(id);
+      navigate("/recruiter/jobs");
 
-    alert("Job deleted successfully!");
+      alert("Job deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting job:", error);
+      alert("Failed to delete job. Please try again.");
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex h-[70vh] items-center justify-center">
+        <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-[#4a90e2]"></div>
+      </div>
+    );
   }
 
   if (!job) {
@@ -132,6 +134,52 @@ export default function JobDetailPage() {
             <span>Posted {formatDate(job.createdAt)}</span>
           </div>
         </div>
+        <div className="flex gap-2">
+          <button
+            className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#4a90e2] focus:ring-offset-2"
+            onClick={() => setIsFormOpen(true)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-1.5"
+            >
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+            Edit
+          </button>
+          <button
+            className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+            onClick={() => setShowDeleteDialog(true)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-1.5"
+            >
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              <line x1="10" y1="11" x2="10" y2="17"></line>
+              <line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
+            Delete
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-4 md:items-center">
@@ -180,53 +228,6 @@ export default function JobDetailPage() {
             {job.salaryRange}
           </span>
         )}
-      </div>
-
-      <div className="flex gap-2">
-        <button
-          className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#4a90e2] focus:ring-offset-2"
-          onClick={() => setIsFormOpen(true)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mr-1.5"
-          >
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-          </svg>
-          Edit
-        </button>
-        <button
-          className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-          onClick={() => setShowDeleteDialog(true)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mr-1.5"
-          >
-            <polyline points="3 6 5 6 21 6"></polyline>
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-            <line x1="10" y1="11" x2="10" y2="17"></line>
-            <line x1="14" y1="11" x2="14" y2="17"></line>
-          </svg>
-          Delete
-        </button>
       </div>
 
       <div className="h-px w-full bg-gray-200"></div>
@@ -329,4 +330,3 @@ export default function JobDetailPage() {
     </div>
   )
 }
-
