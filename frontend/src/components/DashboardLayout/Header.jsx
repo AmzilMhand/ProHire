@@ -74,7 +74,7 @@ export default function Header({ toggleSidebar, sidebarOpen, isMobile }) {
       description: "John Doe applied for Senior Frontend Developer",
       time: "5 minutes ago",
       unread: true,
-      avatar: "/placeholder.svg?height=40&width=40",
+      avatar: "/candidat-avatar.png?height=40&width=40",
     },
     {
       id: 2,
@@ -82,7 +82,7 @@ export default function Header({ toggleSidebar, sidebarOpen, isMobile }) {
       description: "Interview with Sarah Smith at 2:00 PM",
       time: "1 hour ago",
       unread: true,
-      avatar: "/placeholder.svg?height=40&width=40",
+      avatar: "/candidat-avatar.png?height=40&width=40",
     },
     {
       id: 3,
@@ -90,7 +90,7 @@ export default function Header({ toggleSidebar, sidebarOpen, isMobile }) {
       description: "New feedback submitted for Michael Brown",
       time: "3 hours ago",
       unread: false,
-      avatar: "/placeholder.svg?height=40&width=40",
+      avatar: "/candidat-avatar.png?height=40&width=40",
     },
   ]
 
@@ -149,26 +149,27 @@ export default function Header({ toggleSidebar, sidebarOpen, isMobile }) {
 
           {/* Search */}
           <div className="relative hidden md:block">
-            <div className="flex items-center rounded-lg bg-gray-100 dark:bg-gray-700 px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-opacity-50 transition-all duration-200">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-400 dark:text-gray-500"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-              <input
-                type="text"
-                placeholder="Search..."
-                className="ml-2 w-64 bg-transparent text-sm text-gray-700 dark:text-gray-300 focus:outline-none placeholder:text-gray-500 dark:placeholder:text-gray-500"
-              />
+            <div className="flex items-center rounded-lg px-3 py-2  transition-all duration-200">
+            <input className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm "
+              type="search" name="search" placeholder="Search"/>
+            <button type="submit" className="absolute right-2 top-0 mt-5 mr-4">
+                <svg 
+                  className="text-gray-600 h-4 w-4 fill-current" 
+                  xmlns="http://www.w3.org/2000/svg"
+                  version="1.1" 
+                  id="Capa_1" 
+                  x="0px" 
+                  y="0px"
+                  viewBox="0 0 56.966 56.966" 
+                  width="512px" 
+                  height="512px"
+                >
+                  <path d="M55.146,51.887L41.588,38.329c3.486-4.86,5.379-10.695,5.379-16.79C46.967,9.647,37.32,0,25.482,0S3.996,9.647,3.996,21.539
+                    s9.647,21.539,21.486,21.539c6.095,0,11.929-1.893,16.79-5.379l13.558,13.558c0.77,0.77,2.015,0.77,2.785,0
+                    C55.917,53.902,55.917,52.657,55.146,51.887z M6.996,21.539C6.996,11.419,15.362,3.053,25.482,3.053s18.486,8.366,18.486,18.486
+                    s-8.366,18.486-18.486,18.486S6.996,31.659,6.996,21.539z"/>
+                </svg>
+            </button>
             </div>
           </div>
 
@@ -378,17 +379,16 @@ export default function Header({ toggleSidebar, sidebarOpen, isMobile }) {
                   {currentUser?.photoURL ? (
                     <img
                       src={currentUser.photoURL || "/placeholder.svg"}
-                      alt={currentUser?.displayName || "User"}
+                      alt={currentUser?.name || "User"}
                       className="h-full w-full object-cover"
                     />
                   ) : (
-                    currentUser?.displayName?.charAt(0) || "U"
+                    currentUser?.name?.charAt(0) || "U"
                   )}
-                  <div className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-green-500 border-2 border-white dark:border-gray-800"></div>
                 </div>
                 <div className="ml-2 hidden md:block text-left">
                   <div className="text-sm font-medium text-gray-900 dark:text-white">
-                    {currentUser?.displayName || "User"}
+                    {currentUser?.name || "User"}
                   </div>
                   <div className="text-xs text-gray-500 dark:text-gray-400">Recruiter</div>
                 </div>

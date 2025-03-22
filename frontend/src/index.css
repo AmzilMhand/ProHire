@@ -118,6 +118,7 @@
 html {
   scroll-behavior: smooth;
 }
+
 body{
   margin: 0;
   box-sizing: border-box;
@@ -125,7 +126,7 @@ body{
   padding: 0;
   min-width: 1024px;
   scroll-behavior: smooth;
-
+  cursor: default;
   overflow-x: auto;
   /* background-image: url(/public/background3.jpg);
   background-size: cover; */

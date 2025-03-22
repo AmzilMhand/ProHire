@@ -1,19 +1,17 @@
-"use client"
-
-import { useNavigate, useLocation } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ open, isMobile, setOpen }) => {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // Navigation items
   const navigation = [
     {
       title: "Main",
       items: [
         {
           name: "Dashboard",
-          href: "/recruiter/dashboard",
+          to: "/recruiter/dashboard",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +32,7 @@ const Sidebar = ({ open, isMobile, setOpen }) => {
         },
         {
           name: "Jobs",
-          href: "/recruiter/jobs",
+          to: "/recruiter/jobs",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +51,7 @@ const Sidebar = ({ open, isMobile, setOpen }) => {
         },
         {
           name: "Candidates",
-          href: "/recruiter/candidates",
+          to: "/recruiter/candidates",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +75,7 @@ const Sidebar = ({ open, isMobile, setOpen }) => {
       items: [
         {
           name: "Interviews",
-          href: "/recruiter/interviews",
+          to: "/recruiter/interviews",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +96,7 @@ const Sidebar = ({ open, isMobile, setOpen }) => {
         },
         {
           name: "Reports",
-          href: "/recruiter/reports",
+          to: "/recruiter/reports",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +115,7 @@ const Sidebar = ({ open, isMobile, setOpen }) => {
         },
         {
           name: "Settings",
-          href: "/recruiter/settings",
+          to: "/recruiter/settings",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -130,20 +128,19 @@ const Sidebar = ({ open, isMobile, setOpen }) => {
               strokeLinejoin="round"
             >
               <circle cx="12" cy="12" r="3"></circle>
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
             </svg>
           ),
         },
       ],
     },
-  ]
+  ];
 
-  // Close sidebar when clicking outside on mobile
   const handleOverlayClick = () => {
     if (isMobile) {
-      setOpen(false)
+      setOpen(false);
     }
-  }
+  };
 
   return (
     <>
@@ -162,20 +159,28 @@ const Sidebar = ({ open, isMobile, setOpen }) => {
         }`}
       >
         {/* Logo */}
-        <div className={`flex h-16 items-center px-4 ${!open && "lg:justify-center"}`}>
+        <div
+          className={`flex h-16 items-center px-4 ${
+            !open && "lg:justify-center"
+          }`}
+        >
           {open ? (
-            <div className="flex items-center">
-              <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold shadow-md">
-                R
-              </div>
-              <span className="ml-2 text-xl font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Recruiter
-              </span>
-            </div>
-          ) : (
+            <NavLink to="/" className="flex items-center">
             <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold shadow-md">
-              R
+              P
             </div>
+            <span
+              className={`ml-2 text-lg font-semibold text-gray-900 text-white"}`}
+            >
+              ProHire
+            </span>
+          </NavLink>
+          ) : (
+            <NavLink to="/">
+              <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold shadow-md">
+              P
+              </div>
+            </NavLink>
           )}
         </div>
 
@@ -189,37 +194,39 @@ const Sidebar = ({ open, isMobile, setOpen }) => {
                 </h3>
               )}
               <div className="space-y-1">
-                {group.items.map((item) => {
-                  const isActive = location.pathname === item.href
-
-                  return (
-                    <button
-                      key={item.name}
-                      onClick={() => navigate(item.href)}
-                      className={`group flex w-full items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
-                        isActive
-                          ? "bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700"
-                          : "text-gray-700 hover:bg-gray-50"
-                      } ${!open && "lg:justify-center"}`}
+                {group.items.map((item) => (
+                  <NavLink
+                    key={item.name}
+                    to={item.to}
+                    className={`group flex w-full items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
+                      location.pathname === item.to
+                        ? "bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700"
+                        : "text-gray-700 hover:bg-gray-50"
+                    } ${!open && "lg:justify-center"}`}
+                  >
+                    <span
+                      className={`flex items-center justify-center ${
+                        location.pathname === item.to
+                          ? "text-blue-600"
+                          : "text-gray-500 group-hover:text-blue-600"
+                      }`}
                     >
+                      {item.icon}
+                    </span>
+                    {(open || isMobile) && (
                       <span
-                        className={`flex items-center justify-center ${
-                          isActive ? "text-blue-600" : "text-gray-500 group-hover:text-blue-600"
+                        className={`ml-3 transition-opacity duration-200 ${
+                          location.pathname === item.to ? "font-medium" : ""
                         }`}
                       >
-                        {item.icon}
+                        {item.name}
                       </span>
-                      {(open || isMobile) && (
-                        <span className={`ml-3 transition-opacity duration-200 ${isActive ? "font-medium" : ""}`}>
-                          {item.name}
-                        </span>
-                      )}
-                      {isActive && open && (
-                        <span className="absolute inset-y-0 left-0 w-1 rounded-r-md bg-blue-600"></span>
-                      )}
-                    </button>
-                  )
-                })}
+                    )}
+                    {location.pathname === item.to && open && (
+                      <span className="absolute inset-y-0 left-0 w-1 rounded-r-md bg-blue-600"></span>
+                    )}
+                  </NavLink>
+                ))}
               </div>
             </div>
           ))}
@@ -230,12 +237,16 @@ const Sidebar = ({ open, isMobile, setOpen }) => {
           <div className="p-3">
             <button
               type="button"
-              className={`flex w-full items-center justify-center rounded-lg bg-gray-50 px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 ${!open && "lg:justify-center"}`}
+              className={`flex w-full items-center justify-center rounded-lg bg-gray-50 px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 ${
+                !open && "lg:justify-center"
+              }`}
               onClick={() => setOpen(!open)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className={`h-5 w-5 text-gray-500 transition-transform duration-300 ${open ? "" : "rotate-180"}`}
+                className={`h-5 w-5 text-gray-500 transition-transform duration-300 ${
+                  open ? "" : "rotate-180"
+                }`}
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -251,8 +262,7 @@ const Sidebar = ({ open, isMobile, setOpen }) => {
         )}
       </aside>
     </>
-  )
-}
+  );
+};
 
-export default Sidebar
-
+export default Sidebar;

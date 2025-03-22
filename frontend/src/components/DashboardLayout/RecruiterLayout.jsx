@@ -34,7 +34,7 @@ const Layout = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-800">
       <Sidebar open={sidebarOpen} isMobile={isMobile} setOpen={setSidebarOpen} />
       <div
         className={`flex flex-1 flex-col transition-all duration-300 ease-in-out ${

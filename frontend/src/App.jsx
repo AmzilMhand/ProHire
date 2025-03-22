@@ -4,10 +4,6 @@ import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 
 // Components
-import Header from "./components/Header/Header";
-import RecruiterHero from "./components/Hero/RecruiterHero";
-import CandidateHero from "./components/Hero/CandidateHero";
-import HowItsWork from "./components/How Its Work/HowItsWork";
 
 // Auth Pages
 import RecruiterAuth from "./pages/Auth/RecruiterAuth";
@@ -25,57 +21,31 @@ import { Pagination, Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
+import HomePage from "./pages/Home";
 import GuestRoute from "./components/GuestRoute";
 import JobDetailPage from "./pages/Recruiter/Jobs/jobDetails/page";
 import Jobs from "./pages/Recruiter/Jobs/page";
 import DashboardPage from "./pages/Recruiter/dashboard/page";
-import RecruiterLayout from "./components/layout/RecruiterLayout";
+import RecruiterLayout from "./components/DashboardLayout/RecruiterLayout";
 import Candidates from "./pages/Recruiter/candidates/Candidates";
 import Interviews from "./pages/Recruiter/interviews/Interviews";
 import Analytics from "./pages/Recruiter/analytics/Analytics";
 import Reports from "./pages/Recruiter/reports/Reports";
 import Settings from "./pages/Recruiter/settings/Settings";
 import Help from "./pages/Recruiter/help/Help";
-function Home() {
-  return (
-    <>
-      <Header />
-
-      <Swiper
-        className="mySwiper"
-        slidesPerView={1}
-        spaceBetween={30}
-        loop={true}
-        pagination={true}
-        autoplay={{
-          delay: 5000,
-          disableOnInteraction: false,
-        }}
-        modules={[Pagination, Autoplay, EffectFade]}
-      >
-        <SwiperSlide>
-          <RecruiterHero />
-        </SwiperSlide>
-        <SwiperSlide>
-          <CandidateHero />
-        </SwiperSlide>
-      </Swiper>
-      <HowItsWork />
-    </>
-  );
-}
 
 function App() {
   return (
     <AuthProvider>
       <Router>
         <div className="App">
-          <div className="background-image"></div>
-          <div className="background-overly"></div>
+          {/* <div className="background-image"></div>
+          <div className="background-overly"></div> */}
 
           <Routes>
             {/* Public Routes */}
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="*" element={<HomePage />} />
             
             {/* Auth Routes */}
             <Route path="/verify-email/:token" element={<VerifyEmail />} />
